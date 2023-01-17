@@ -28,6 +28,7 @@ def config(filename='database.ini', section='postgresql'):
 
 def connect():
     try:
+        print('Connecting to PSQL...')
         params = config()
         return psycopg2.connect(**params)
     except (Exception, psycopg2.DatabaseError) as error:
