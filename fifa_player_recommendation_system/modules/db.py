@@ -2,6 +2,8 @@ import psycopg2
 
 from configparser import ConfigParser
 
+conn = None
+
 def config(filename='database.ini', section='postgresql'):
     """Read database configuration file and return a dictionary
     of configuration key-value pairs.
@@ -27,10 +29,30 @@ def config(filename='database.ini', section='postgresql'):
     return db
 
 def connect():
+    global conn
+
     try:
         print('Connecting to PSQL...')
         params = config()
-        return psycopg2.connect(**params)
+        conn = psycopg2.connect(**params)
+
+        return conn
     except (Exception, psycopg2.DatabaseError) as error:
         print('Error occurred connecting to PostgreSQL')
         print(error)
+
+def get_players():
+    """Get player information by joining the players and player_stats tables
+
+    Returns:
+        players: Players list
+    """
+    global conn
+
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM players JOIN player_stats ON player_stats.player_id = players.id')
+    players = cursor.fetchall()
+
+    cursor.close()
+
+    return players
