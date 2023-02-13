@@ -1,6 +1,10 @@
 import pandas as pd
 
-from fifa_player_recommendation_system.modules import db
+from fifa_player_recommendation_system.modules import db, utils
+
+# pd.set_option('display.max_columns', None)
+# pd.set_option('display.max_rows', None)
+# pd.set_option('display.max_colwidth', None)
 
 player_columns = ['ID', 'Short Name', 'Full Name', 'Overall', 'Potential', 'Value', 
         'Position', 'Nationality', 'Picture URL', 'Age', 'Height (cm)', 'Weight (kg)', 
@@ -21,20 +25,20 @@ player_columns = ['ID', 'Short Name', 'Full Name', 'Overall', 'Potential', 'Valu
 # def preprocess_training_data():
 
 def train():
-    global player_columns 
+    global player_columns
 
     players = db.get_players()
     players_df = pd.DataFrame(players)
     players_df.columns = player_columns
 
-    # drop unnecessary columns before training
-    players_df = players_df.drop(columns=['ID', 'Short Name', 'Full Name', 'Nationality', 'Picture URL',
-    'Club', 'League', 'Wage (€)', 'Release Clause (€)', 'Player Stats ID', 'Player ID', 'Pace Total',
-    'Shooting Total', 'Passing Total', 'Dribbling Total', 'Defending Total', 'Physicality Total', 
-    'ST Rating', 'LW Rating', 'LF Rating', 'CF Rating', 'RF Rating', 'RW Rating', 'CAM Rating', 
-    'LM Rating', 'CM Rating', 'RM Rating', 'LWB Rating', 'CDM Rating', 'RWB Rating', 'LB Rating', 
-    'CB Rating', 'RB Rating', 'GK Rating'])
+    utils.plot_stat_distribution('Potential', players_df)
 
-    print(players_df)
+    # drop unnecessary columns before training
+    players_df = players_df.drop(columns=['Short Name', 'Full Name', 'Overall', 'Potential', 'Value', 
+    'Nationality', 'Picture URL', 'Club', 'Age', 'League', 'Wage (€)', 'Release Clause (€)', 'Player Stats ID', 
+    'Player ID', 'Pace Total', 'Shooting Total', 'Passing Total', 'Dribbling Total', 'Defending Total', 
+    'Physicality Total', 'ST Rating', 'LW Rating', 'LF Rating', 'CF Rating', 'RF Rating', 'RW Rating', 
+    'CAM Rating', 'LM Rating', 'CM Rating', 'RM Rating', 'LWB Rating', 'CDM Rating', 'RWB Rating', 
+    'LB Rating', 'CB Rating', 'RB Rating', 'GK Rating'])
 
 # def get_evaluation_metrics(clf, x, y)

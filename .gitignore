@@ -130,3 +130,6 @@ dmypy.json
 
 # config folder
 config/
+
+# images folder
+images/
