@@ -35,6 +35,7 @@ def connect():
         print('Connecting to PSQL...')
         params = config()
         conn = psycopg2.connect(**params)
+        print('Connection established')
 
         return conn
     except (Exception, psycopg2.DatabaseError) as error:

@@ -8,4 +8,4 @@ if __name__ == '__main__':
     model.train()
 
     # run Flask server
-    server.run_server()
+    # server.run_server()
